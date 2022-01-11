@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movieapp/screens/movie_grid.dart';
 import 'package:movieapp/screens/movie_list.dart';
 
 void main() {
@@ -12,11 +13,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      routes: {
+        "/":(context)=>MovieList(),
+        "/MovieGridView":(context)=>MovieGrid(),
+      },
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MovieList(),
+   //   home: const MovieList(),
     );
   }
 }

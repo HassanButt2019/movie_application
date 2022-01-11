@@ -9,6 +9,8 @@ class MovieList extends StatefulWidget {
   _MovieListState createState() => _MovieListState();
 }
 
+
+
 class _MovieListState extends State<MovieList> {
   @override
   Widget build(BuildContext context) {
@@ -17,7 +19,7 @@ class _MovieListState extends State<MovieList> {
         title: Text("Movie List"),
         leading: IconButton(
           onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context)=>MovieGrid()));
+            Navigator.pushNamed(context, '/MovieGridView');
 
         }, icon: Icon(Icons.grid_3x3_outlined , color: Colors.white,),),
 
