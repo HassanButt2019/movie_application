@@ -14,6 +14,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+
       onGenerateRoute: (settings){
         if(settings.name == "/")
           {
@@ -37,7 +38,7 @@ class MyApp extends StatelessWidget {
       //   "/MovieGridView":(context)=>MovieGrid(),
       // },
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.red,
       ),
    //   home: const MovieList(),
     );

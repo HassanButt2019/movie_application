@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:movieapp/models/movie_model.dart';
 import 'package:movieapp/widgets/movie_component_grid.dart';
 
 class MovieGrid extends StatefulWidget {
@@ -11,20 +12,37 @@ class MovieGrid extends StatefulWidget {
 
 class _MovieGridState extends State<MovieGrid> {
 
-  List<Container> _buildGridTileList(int count) => List.generate(
-      count, (i) => Container(child: ImageComponentGrid()));
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+
         title: Text("Movie Grid"),
       ),
-      body: GridView.extent(
-          maxCrossAxisExtent: 150,
-      padding: const EdgeInsets.all(4),
-      mainAxisSpacing: 4,
-      crossAxisSpacing: 4,
-      children: _buildGridTileList(5)),
+      body: Container(
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+        decoration: BoxDecoration(
+          gradient:
+          LinearGradient(
+              begin: Alignment.topLeft,
+              end:
+              Alignment.bottomRight,
+
+              colors: [ Colors.red,Colors.black,Colors.black]),
+        ),
+        child: GridView.builder(
+            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                maxCrossAxisExtent: 200,
+
+                childAspectRatio: 3 / 5,
+                crossAxisSpacing: 20,
+                mainAxisSpacing: 20),
+            itemCount: movies.length,
+            itemBuilder: (BuildContext ctx, index) {
+              return ImageComponentGrid(movie:movies[index]);
+            }),
+      ),
     );
   }
 }
