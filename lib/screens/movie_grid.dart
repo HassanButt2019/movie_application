@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:movieapp/widgets/movie_component_grid.dart';
 
 class MovieGrid extends StatefulWidget {
-  const MovieGrid({Key? key}) : super(key: key);
-
+  MovieGrid({this.id});
+  int? id;
   @override
   _MovieGridState createState() => _MovieGridState();
 }

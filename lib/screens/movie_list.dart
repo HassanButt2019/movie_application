@@ -19,7 +19,7 @@ class _MovieListState extends State<MovieList> {
         title: Text("Movie List"),
         leading: IconButton(
           onPressed: () {
-            Navigator.pushNamed(context, '/MovieGridView');
+            Navigator.pushNamed(context, '/MovieGridView/1');
 
         }, icon: Icon(Icons.grid_3x3_outlined , color: Colors.white,),),
 
