@@ -15,3 +15,10 @@ For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 # movie_application
+1)Firstly implemented normal navigation with Route and named technique
+Limitations:
+We cannot parse id if there is any id provided through url or path like ---> /path/:id
+
+2) to cater this problem i implemented ongenerateRoute which helps me to parse id from the url
+
+
