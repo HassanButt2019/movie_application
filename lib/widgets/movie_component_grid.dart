@@ -37,7 +37,7 @@ class ImageComponentGrid extends StatelessWidget {
 
                 FittedBox(
                   fit: BoxFit.fitHeight,
-                  child: Center(child: Text(movie!.name!,style: TextStyle(color: Colors.white),)),
+                  child: Center(child: Text(movie!.name!,style: TextStyle(fontSize: 16,color: Colors.white,fontWeight: FontWeight.bold),)),
                 ),
 
               ]),

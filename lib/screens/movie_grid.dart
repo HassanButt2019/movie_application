@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:movieapp/models/movie_model.dart';
+import 'package:movieapp/widgets/app_bar_container.dart';
 import 'package:movieapp/widgets/movie_component_grid.dart';
 
 class MovieGrid extends StatefulWidget {
@@ -18,6 +19,7 @@ class _MovieGridState extends State<MovieGrid> {
       appBar: AppBar(
 
         title: Text("Movie Grid"),
+        flexibleSpace: AppBarGradient(),
       ),
       body: Container(
         height: MediaQuery.of(context).size.height,

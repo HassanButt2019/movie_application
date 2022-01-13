@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:movieapp/models/movie_model.dart';
 import 'package:movieapp/screens/movie_grid.dart';
+import 'package:movieapp/widgets/app_bar_container.dart';
+import 'package:movieapp/widgets/carousal_widget.dart';
 import 'package:movieapp/widgets/movie_component_grid.dart';
 
 class MovieList extends StatefulWidget {
@@ -18,14 +20,17 @@ class _MovieListState extends State<MovieList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       appBar: AppBar(
         title: Text("Movie List"),
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pushNamed(context, '/MovieGridView/1');
+        flexibleSpace: AppBarGradient(),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.pushNamed(context, '/MovieGridView/1');
 
-        }, icon: Icon(Icons.grid_3x3_outlined , color: Colors.white,),),
+            }, icon: Icon(Icons.grid_3x3_outlined , color: Colors.white,),),
+        ],
+
 
       ),
       body: Container(
@@ -38,7 +43,7 @@ class _MovieListState extends State<MovieList> {
                 end:
                 Alignment.bottomRight,
 
-                colors: [ Colors.red,Colors.black]),
+                colors: [ Colors.red,Colors.black,Colors.black]),
           ),
 
         child: SingleChildScrollView(
@@ -46,6 +51,17 @@ class _MovieListState extends State<MovieList> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              CrausalWidget(),
+
+
+
+
+
+
+
+
+
+
               Padding(
                 padding: const EdgeInsets.only(left: 20.0 , top: 10),
                 child: Text("Most Popular - Movies" , style: TextStyle(color: Colors.white , fontWeight: FontWeight.bold , fontSize: 20),),

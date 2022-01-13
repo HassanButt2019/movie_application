@@ -3,6 +3,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:movieapp/models/movie_model.dart';
+import 'package:movieapp/widgets/app_bar_container.dart';
 
 
 class MovieDetail extends StatelessWidget {
@@ -15,6 +16,7 @@ class MovieDetail extends StatelessWidget {
 
 
       appBar: AppBar(
+        flexibleSpace: AppBarGradient(),
         title: Text(movie!.name!.toUpperCase()),
       ),
       body: Container(
@@ -27,7 +29,7 @@ class MovieDetail extends StatelessWidget {
               end:
               Alignment.bottomRight,
 
-              colors: [ Colors.red,Colors.black]),
+              colors: [ Colors.red,Colors.black,Colors.black]),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -60,27 +62,20 @@ class MovieDetail extends StatelessWidget {
                       children: [
                         Text(movie!.name! , style: TextStyle(color: Colors.white , fontWeight: FontWeight.bold , fontSize: 20),),
                     SizedBox(
-                      height: MediaQuery.of(context).size.height*0.1,
+                      height: MediaQuery.of(context).size.height*0.05,
                     ),
-                        Container(
-                          width:MediaQuery.of(context).size.width*0.3,
-                          child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                          Text(movie!.minutes! , style: TextStyle(color: Colors.white , fontWeight: FontWeight.bold , fontSize: 20),),
-                          Text(movie!.certificate! , style: TextStyle(color: Colors.white , fontWeight: FontWeight.bold , fontSize: 20),),
-                          Text(movie!.rating! , style: TextStyle(color: Colors.white , fontWeight: FontWeight.bold , fontSize: 20),),
+                        Text(movie!.minutes!+" mins" , style: TextStyle(color: Colors.white , fontWeight: FontWeight.bold , fontSize: 15),),
+                        Text(movie!.certificate!+" certificate" , style: TextStyle(color: Colors.white , fontWeight: FontWeight.bold , fontSize: 15),),
+                        Text(movie!.rating! +" rating", style: TextStyle(color: Colors.white , fontWeight: FontWeight.bold , fontSize: 15),),
 
-                      ],
-                    ),
-                        )
 
                       ],
                     )),
-
               ],
             ),
+Row(
+  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  children: [
 
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -101,10 +96,38 @@ class MovieDetail extends StatelessWidget {
                   ),
                 ),
               ),
+            ),
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: const[
+
+                Padding(
+                  padding: EdgeInsets.only(right: 8.0),
+                  child: Icon(Icons.download_outlined,color: Colors.white,),
+                ),
+
+                Padding(
+                  padding: EdgeInsets.only(right: 8.0),
+                  child: Icon(Icons.favorite_border_outlined,color: Colors.white,),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(right: 8.0),
+                  child: Icon(Icons.settings,color: Colors.white,),
+                ),
+              ],
             )
 
           ],
         ),
+
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(movie!.description!,style: TextStyle(color: Colors.white),),
+            ),
+
+          ],
+        )
       )
     );
   }
