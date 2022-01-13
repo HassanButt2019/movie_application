@@ -12,9 +12,16 @@ class MovieGrid extends StatefulWidget {
 }
 
 class _MovieGridState extends State<MovieGrid> {
+  double?height;
+  double?width;
+
+
+
 
   @override
   Widget build(BuildContext context) {
+    width = MediaQuery.of(context).size.width;
+    height=MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
 
@@ -22,9 +29,9 @@ class _MovieGridState extends State<MovieGrid> {
         flexibleSpace: AppBarGradient(),
       ),
       body: Container(
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
-        decoration: BoxDecoration(
+        height: height,
+        width: width,
+        decoration:const BoxDecoration(
           gradient:
           LinearGradient(
               begin: Alignment.topLeft,
@@ -42,7 +49,7 @@ class _MovieGridState extends State<MovieGrid> {
                 mainAxisSpacing: 20),
             itemCount: movies.length,
             itemBuilder: (BuildContext ctx, index) {
-              return ImageComponentGrid(movie:movies[index]);
+              return ImageComponentGrid(movie:movies[index],widthProvided: 0.45,heigthProvided: 0.30,);
             }),
       ),
     );

@@ -36,7 +36,6 @@ List<Movie> movies = [
 
 List<String> movieImages = [
  "https://m.media-amazon.com/images/M/MV5BMDFkYTc0MGEtZmNhMC00ZDIzLWFmNTEtODM1ZmRlYWMwMWFmXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_FMjpg_UX1000_.jpg",
-
   "https://m.media-amazon.com/images/M/MV5BM2MyNjYxNmUtYTAwNi00MTYxLWJmNWYtYzZlODY3ZTk3OTFlXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_.jpg",
   "https://flxt.tmsimg.com/assets/p2084_p_v10_ad.jpg",
   "https://images.hungama.com/c/1/f60/70f/2009199/2009199_1280x800.jpg",

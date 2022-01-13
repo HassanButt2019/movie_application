@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:movieapp/models/movie_model.dart';
+import 'package:movieapp/screens/movie_detail.dart';
 import 'package:movieapp/screens/movie_grid.dart';
 import 'package:movieapp/widgets/app_bar_container.dart';
 import 'package:movieapp/widgets/carousal_widget.dart';
 import 'package:movieapp/widgets/movie_component_grid.dart';
+import 'package:movieapp/widgets/movie_list_view.dart';
 
 class MovieList extends StatefulWidget {
   const MovieList({Key? key}) : super(key: key);
@@ -17,12 +19,15 @@ class MovieList extends StatefulWidget {
 class _MovieListState extends State<MovieList> {
 
   Movie movie =  Movie();
+  double? width , height;
   @override
   Widget build(BuildContext context) {
+    width = MediaQuery.of(context).size.width;
+    height=MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
-        title: Text("Movie List"),
-        flexibleSpace: AppBarGradient(),
+        title: const Text("Movie List"),
+        flexibleSpace:const AppBarGradient(),
         actions: [
           IconButton(
             onPressed: () {
@@ -34,15 +39,14 @@ class _MovieListState extends State<MovieList> {
 
       ),
       body: Container(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-          decoration: BoxDecoration(
+          height: height!,
+          width: width!,
+          decoration: const BoxDecoration(
             gradient:
             LinearGradient(
                 begin: Alignment.topLeft,
                 end:
                 Alignment.bottomRight,
-
                 colors: [ Colors.red,Colors.black,Colors.black]),
           ),
 
@@ -51,96 +55,12 @@ class _MovieListState extends State<MovieList> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              CrausalWidget(),
+            const  CrausalWidget(),
+              MovieListView(title: "Recently Added - Movies"),
+              MovieListView(title: "Most Popular - Movies"),
+              MovieListView(title: "Your Favourite - Movies"),
 
 
-
-
-
-
-
-
-
-
-              Padding(
-                padding: const EdgeInsets.only(left: 20.0 , top: 10),
-                child: Text("Most Popular - Movies" , style: TextStyle(color: Colors.white , fontWeight: FontWeight.bold , fontSize: 20),),
-              ),
-              Container(
-                height: MediaQuery.of(context).size.height*0.40,
-                child: ListView.builder(
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    itemCount: movies.length,
-                    itemBuilder: (context,index){
-                      return  Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: ImageComponentGrid(movie: movies[index],),
-                      );
-                    }),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 20.0 , top: 10),
-                child: Text("Most Popular - Movies" , style: TextStyle(color: Colors.white , fontWeight: FontWeight.bold , fontSize: 20),),
-              ),
-              Container(
-                height: MediaQuery.of(context).size.height*0.40,
-                child: ListView.builder(
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    itemCount: movies.length,
-                    itemBuilder: (context,index){
-                      return  Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: ImageComponentGrid(movie: movies[index],),
-                      );
-                    }),
-              ),
-
-
-
-
-
-
-              Padding(
-                padding: const EdgeInsets.only(left: 20.0 , top: 10),
-                child: Text("Most Popular - Movies" , style: TextStyle(color: Colors.white , fontWeight: FontWeight.bold , fontSize: 20),),
-              ),
-              Container(
-                height: MediaQuery.of(context).size.height*0.40,
-                child: ListView.builder(
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    itemCount: movies.length,
-                    itemBuilder: (context,index){
-                      return  Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: ImageComponentGrid(movie: movies[index],),
-                      );
-                    }),
-              ),
-
-
-
-
-
-              Padding(
-                padding: const EdgeInsets.only(left: 20.0 , top: 10),
-                child: Text("Most Popular - Movies" , style: TextStyle(color: Colors.white , fontWeight: FontWeight.bold , fontSize: 20),),
-              ),
-              Container(
-                height: MediaQuery.of(context).size.height*0.40,
-                child: ListView.builder(
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    itemCount: movies.length,
-                    itemBuilder: (context,index){
-                      return  Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: ImageComponentGrid(movie: movies[index],),
-                      );
-                    }),
-              ),
             ],
           ),
         ),
