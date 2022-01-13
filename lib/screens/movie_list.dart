@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:movieapp/models/movie_model.dart';
 import 'package:movieapp/screens/movie_grid.dart';
 import 'package:movieapp/widgets/movie_component_grid.dart';
-import 'package:movieapp/widgets/movie_widget.dart';
 
 class MovieList extends StatefulWidget {
   const MovieList({Key? key}) : super(key: key);
@@ -64,11 +63,6 @@ class _MovieListState extends State<MovieList> {
                       );
                     }),
               ),
-
-
-
-
-
               Padding(
                 padding: const EdgeInsets.only(left: 20.0 , top: 10),
                 child: Text("Most Popular - Movies" , style: TextStyle(color: Colors.white , fontWeight: FontWeight.bold , fontSize: 20),),
