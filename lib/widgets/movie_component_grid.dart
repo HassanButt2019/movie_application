@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:movieapp/models/movie_model.dart';
+import 'package:movieapp/data/models/movie.dart';
 import 'package:movieapp/screens/movie_detail.dart';
 
 class ImageComponentGrid extends StatelessWidget {
@@ -21,11 +21,13 @@ class ImageComponentGrid extends StatelessWidget {
 
 
       child: Container(
-        height:height! * 0.1,
+        height:height! * 0.15,
+        width: width! *0.25,
 
         child:
           Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+            //  crossAxisAlignment: CrossAxisAlignment.stretch,
               children:[
                 Container(
                   width: widthProvided==null ? width! *0.25:widthProvided!*width!,
@@ -33,19 +35,19 @@ class ImageComponentGrid extends StatelessWidget {
                   height:heigthProvided == null ?height! *0.20:heigthProvided!*height!,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(20)),
+
                       image: DecorationImage(
                           image: NetworkImage(
-                              movie!.img!                        ),
+                              "https://image.tmdb.org/t/p/w500/"+movie!.poster_path!                        ),
                           fit: BoxFit.cover
                       )
                   ),
                 ),
-
-                FittedBox(
-                  fit: BoxFit.fitHeight,
-                  child: Center(child: Text(movie!.name!,style: TextStyle(fontSize: 16,color: Colors.white,fontWeight: FontWeight.bold),)),
+                SizedBox(
+                  height: 10,
                 ),
 
+                Center(child: Text(movie!.title!,style: TextStyle(fontSize: 16,color: Colors.white,fontWeight: FontWeight.bold),)),
               ]),
       ),
     );

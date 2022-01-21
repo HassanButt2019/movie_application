@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:movieapp/models/movie_model.dart';
+import 'package:movieapp/data/models/movie.dart';
 import 'package:movieapp/widgets/app_bar_container.dart';
 import 'package:movieapp/widgets/movie_list_view.dart';
 
@@ -17,7 +17,7 @@ class MovieDetail extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           flexibleSpace: const AppBarGradient(),
-          title: Text(movie!.name!.toUpperCase()),
+          title: Text(movie!.title!.toUpperCase()),
         ),
         body: SingleChildScrollView(
           child: Container(
@@ -43,7 +43,7 @@ class MovieDetail extends StatelessWidget {
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.all(Radius.circular(20)),
                               image: DecorationImage(
-                                  image: NetworkImage(movie!.img!),
+                                  image: NetworkImage( "https://image.tmdb.org/t/p/w500/"+movie!.poster_path!),
                                   fit: BoxFit.cover)),
                         ),
                       ),
@@ -53,7 +53,7 @@ class MovieDetail extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            movie!.name!,
+                            movie!.title!,
                             style: const TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
@@ -63,21 +63,21 @@ class MovieDetail extends StatelessWidget {
                             height: height! * 0.05,
                           ),
                           Text(
-                            movie!.minutes! + " mins",
+                            movie!.vote_count!.toString() + " Votes",
                             style:const TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 15),
                           ),
                           Text(
-                            movie!.certificate! + " certificate",
+                            movie!.popularity!.toString() + " Popularity",
                             style: const TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 15),
                           ),
                           Text(
-                            movie!.rating! + " rating",
+                            movie!.adult! + " Adult",
                             style:const TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
@@ -142,12 +142,12 @@ class MovieDetail extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      movie!.description!,
+                      movie!.overview!,
                       style: const TextStyle(color: Colors.white),
                     ),
                   ),
 
-                  MovieListView(title: "More Like These - Movies"),
+                 // MovieListView(title: "More Like These - Movies",movies: m,),
 
 
 
