@@ -46,13 +46,21 @@ class _CrausalWidgetState extends State<CrausalWidget> {
 
                 },
                 child: Container(
-                    width: MediaQuery.of(context).size.width*0.5,
-                    margin:const EdgeInsets.symmetric(horizontal: 5.0),
+
+                  //  width: MediaQuery.of(context).size.width*0.7,
+
+
+
+                  //  margin:const EdgeInsets.symmetric(horizontal: 5.0),
+
                     decoration: BoxDecoration(
                       image: DecorationImage(
                         image: NetworkImage("https://image.tmdb.org/t/p/w500/"+i.poster_path!),
-                        fit: BoxFit.fitHeight,
+                        fit: BoxFit.fill,
+
+
                       ),
+
                     ),
 
                 ),

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movieapp/data/repository/movie_repository.dart';
 import 'package:movieapp/glitches/error_404.dart';
-import 'package:movieapp/screens/movie_grid.dart';
 import 'package:movieapp/screens/movie_list.dart';
 
 void main() {

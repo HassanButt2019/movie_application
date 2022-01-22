@@ -2,7 +2,7 @@
 import 'package:movieapp/bloc/states/movie_state.dart';
 import 'package:movieapp/data/models/movie.dart';
 
-class LoadedMovie extends MovieState
+class MovieLoadedGrid extends MovieState
 {
 
   List<Movie>? Upcomingmovies;
@@ -13,9 +13,10 @@ class LoadedMovie extends MovieState
 
 
 
-  LoadedMovie({this.TopRatedmovies ,this.Upcomingmovies , this.Popularmovies , this.Similarmovies });
+
+  MovieLoadedGrid({this.TopRatedmovies ,this.Upcomingmovies , this.Popularmovies , this.Similarmovies});
   @override
   // TODO: implement props
-  List<Object?> get props => [TopRatedmovies , Upcomingmovies, Popularmovies , Similarmovies];
+  List<Object?> get props => [ TopRatedmovies , Upcomingmovies, Popularmovies , Similarmovies];
 
 }

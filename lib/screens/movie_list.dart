@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movieapp/bloc/events/change_layout.dart';
 import 'package:movieapp/bloc/events/get_movie.dart';
 import 'package:movieapp/bloc/movie_bloc.dart';
 import 'package:movieapp/bloc/states/movie_failure.dart';
 import 'package:movieapp/bloc/states/movie_initial.dart';
 import 'package:movieapp/bloc/states/movie_loaded.dart';
+import 'package:movieapp/bloc/states/movie_loaded_grid.dart';
 import 'package:movieapp/bloc/states/movie_loading.dart';
 import 'package:movieapp/bloc/states/movie_state.dart';
 import 'package:movieapp/data/models/movie.dart';
 import 'package:movieapp/data/repository/movie_repository.dart';
 import 'package:movieapp/screens/movie_detail.dart';
-import 'package:movieapp/screens/movie_grid.dart';
 import 'package:movieapp/widgets/app_bar_container.dart';
 import 'package:movieapp/widgets/carousal_widget.dart';
 import 'package:movieapp/widgets/movie_component_grid.dart';
@@ -26,6 +27,8 @@ class MovieList extends StatefulWidget {
 
 
 class _MovieListState extends State<MovieList> {
+
+  bool toggle = false;
 
   Movie movie =  Movie();
   double? width , height;
@@ -52,6 +55,7 @@ class _MovieListState extends State<MovieList> {
                   SnackBar(content: Text("Loaded Your Movies") , backgroundColor: Colors.grey,)
               );
             }
+
 
           },
           builder: (context , state){
@@ -98,18 +102,147 @@ class _MovieListState extends State<MovieList> {
                 );
               }
 
+            if(state is MovieLoadedGrid)
+              {
+                return DefaultTabController(
+
+                  length: 3,
+                  child: Scaffold(
+                    appBar: AppBar(
+                      bottom: const TabBar(
+                        tabs: [
+                          Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Text("Up Comming"),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Text("Top Rated"),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Text("Popular"),
+                          ),
+
+                        ],
+                      ),
+
+                      title: Text("Movie Grid"),
+                      flexibleSpace: AppBarGradient(),
+                      actions: [
+                        IconButton(
+                          onPressed: () {
+                            context.read<MovieBloc>().add(
+                              RequestMovie( ),
+                            );
+                          }, icon: Icon(Icons.view_list, color: Colors.white,),),
+                      ],
+                    ),
+                    body: TabBarView(
+                      children: [
+                        Container(
+                          height: height,
+                          width: width,
+                          decoration:const BoxDecoration(
+                            gradient:
+                            LinearGradient(
+                                begin: Alignment.topLeft,
+                                end:
+                                Alignment.bottomRight,
+
+                                colors: [ Colors.red,Colors.black,Colors.black]),
+                          ),
+                          child: GridView.builder(
+                              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                                  maxCrossAxisExtent: 200,
+                                  childAspectRatio: 3 / 5,
+                                  crossAxisSpacing: 20,
+                                  mainAxisSpacing: 20),
+                              itemCount: state.Upcomingmovies!.length,
+                              itemBuilder: (BuildContext ctx, index) {
+                                return ImageComponentGrid(onTap: (){
+                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>MovieDetail(movie:  state.Upcomingmovies![index],)));
+
+                                },
+                                  movie:state.Upcomingmovies![index],widthProvided: 0.45,heigthProvided: 0.30,);
+                              }),
+                        ),
+                        Container(
+                          height: height,
+                          width: width,
+                          decoration:const BoxDecoration(
+                            gradient:
+                            LinearGradient(
+                                begin: Alignment.topLeft,
+                                end:
+                                Alignment.bottomRight,
+
+                                colors: [ Colors.red,Colors.black,Colors.black]),
+                          ),
+                          child: GridView.builder(
+                              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                                  maxCrossAxisExtent: 200,
+                                  childAspectRatio: 3 / 5,
+                                  crossAxisSpacing: 20,
+                                  mainAxisSpacing: 20),
+                              itemCount: state.TopRatedmovies!.length,
+                              itemBuilder: (BuildContext ctx, index) {
+                                return ImageComponentGrid(onTap: (){
+                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>MovieDetail(movie:  state.TopRatedmovies![index],)));
+
+                                },
+                                  movie:state.TopRatedmovies![index],widthProvided: 0.45,heigthProvided: 0.30,);
+                              }),
+                        ),
+                        Container(
+                          height: height,
+                          width: width,
+                          decoration:const BoxDecoration(
+                            gradient:
+                            LinearGradient(
+                                begin: Alignment.topLeft,
+                                end:
+                                Alignment.bottomRight,
+
+                                colors: [ Colors.red,Colors.black,Colors.black]),
+                          ),
+                          child: GridView.builder(
+                              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                                  maxCrossAxisExtent: 200,
+                                  childAspectRatio: 3 / 5,
+                                  crossAxisSpacing: 20,
+                                  mainAxisSpacing: 20),
+                              itemCount: state.Popularmovies!.length,
+                              itemBuilder: (BuildContext ctx, index) {
+                                return ImageComponentGrid(onTap: (){
+                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>MovieDetail(movie:  state.Popularmovies![index],)));
+
+                                },
+                                  movie:state.Popularmovies![index],widthProvided: 0.45,heigthProvided: 0.30,);
+                              }),
+                        ),
+                    ]
+                    ),
+                  ),
+                );
+
+              }
+
+
+
             if(state is LoadedMovie)
               {
-                print(state.movies[0].title);
+
                 return Scaffold(
                       appBar: AppBar(
-                        title: const Text("Movie List"),
+                        title: Center(child: const Text("Movie List")),
                         flexibleSpace:const AppBarGradient(),
                         actions: [
                           IconButton(
                             onPressed: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=>MovieGrid(movies:state.movies ,)));
-
+                              context.read<MovieBloc>().add(
+                                ChangeLayout(),
+                              );
                             }, icon: Icon(Icons.grid_3x3_outlined , color: Colors.white,),),
                         ],
                       ),
@@ -129,15 +262,13 @@ class _MovieListState extends State<MovieList> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                           CrausalWidget(movies: state.movies,),
-                          MovieListView(title: "Recently Added - Movies",movies:state.movies),
-                           MovieListView(title: "Most Popular - Movies",movies: List.from(state.movies.reversed),),
-                           MovieListView(title: "Your Favourite - Movies",movies: state.movies,),
-
-
+                           CrausalWidget(movies: state.Upcomingmovies!,),
+                           MovieListView(title: "Upcomming - Movies",movies:state.Upcomingmovies!),
+                           MovieListView(title: "Top Rated - Movies",movies: state.TopRatedmovies!),
+                          MovieListView(title: "Most Popular - Movies",movies: state.Popularmovies!,),
                         ],
                       ),
-                    ),
+                    )
                   ),
                 );
               }

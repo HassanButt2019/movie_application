@@ -19,7 +19,6 @@ class _MovieListViewState extends State<MovieListView> {
   double?height;
   @override
   Widget build(BuildContext context) {
-    print(widget.movies.length);
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
     return Column(
@@ -38,7 +37,6 @@ class _MovieListViewState extends State<MovieListView> {
               scrollDirection: Axis.horizontal,
               itemCount: widget.movies.length,
               itemBuilder: (context,index){
-                print(widget.movies[index]);
                 return  Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: ImageComponentGrid(

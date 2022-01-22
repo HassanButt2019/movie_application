@@ -18,16 +18,13 @@ class ImageComponentGrid extends StatelessWidget {
     height=MediaQuery.of(context).size.height;
     return InkWell(
       onTap:onTap,
-
-
       child: Container(
-        height:height! * 0.15,
+        height:height! * 0.20,
         width: width! *0.25,
 
         child:
           Column(
               mainAxisSize: MainAxisSize.max,
-            //  crossAxisAlignment: CrossAxisAlignment.stretch,
               children:[
                 Container(
                   width: widthProvided==null ? width! *0.25:widthProvided!*width!,
@@ -39,7 +36,7 @@ class ImageComponentGrid extends StatelessWidget {
                       image: DecorationImage(
                           image: NetworkImage(
                               "https://image.tmdb.org/t/p/w500/"+movie!.poster_path!                        ),
-                          fit: BoxFit.cover
+                          fit: BoxFit.fill
                       )
                   ),
                 ),
@@ -47,7 +44,7 @@ class ImageComponentGrid extends StatelessWidget {
                   height: 10,
                 ),
 
-                Center(child: Text(movie!.title!,style: TextStyle(fontSize: 16,color: Colors.white,fontWeight: FontWeight.bold),)),
+                Center(child: Text(movie!.title!.length > 20 ? movie!.title!.substring(0,20):movie!.title! ,style: TextStyle(fontSize: 16,color: Colors.white,fontWeight: FontWeight.bold),)),
               ]),
       ),
     );

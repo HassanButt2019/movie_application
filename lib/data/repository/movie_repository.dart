@@ -14,14 +14,44 @@ class MovieReposiotry
 {
   final MovieDataProvider _provider = MovieDataProvider();
 
-  Future<List<Movie>>  getMovies() async
+  Future<List<Movie>>  getUpCommingMovies() async
   {
-    print("HELLO WORLD");
-    http.Response rawData = await _provider.getMovies();
-  //  print(rawData.body);
-    var json = jsonDecode(rawData.body) ;
+    print("HELLO Upcomming");
+    http.Response rawData = await _provider.getUpcomingMovies();
+    final json = jsonDecode(rawData.body) ;
     List<Movie> data = json["results"].map<Movie>((model) => Movie.fromJson(model)).toList();
+    return data;
+  }
 
+
+  Future<List<Movie>>  getTopRatedMovies() async
+  {
+    print("HELLO TopRated");
+    http.Response rawData = await _provider.getTopRatedMovies();
+    final json = jsonDecode(rawData.body) ;
+    List<Movie> data = json["results"].map<Movie>((model) => Movie.fromJson(model)).toList();
+    return data;
+  }
+
+
+
+  Future<List<Movie>>  getPopularMovies() async
+  {
+    print("HELLO Popular");
+    http.Response rawData = await _provider.getPopularMovies();
+    final json = jsonDecode(rawData.body) ;
+    List<Movie> data = json["results"].map<Movie>((model) => Movie.fromJson(model)).toList();
+    return data;
+  }
+
+  Future<List<Movie>>  getSimilarMovies(String id) async
+  {
+    print("HELLO Similar");
+    http.Response rawData = await _provider.getSimilarMovies(id);
+    final json = jsonDecode(rawData.body) ;
+
+
+    List<Movie> data = json["results"].map<Movie>((model) => Movie.fromJson(model)).toList();
 
     return data;
   }
