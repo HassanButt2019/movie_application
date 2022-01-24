@@ -12,6 +12,8 @@ import 'package:movieapp/data/models/movie.dart';
 import 'package:movieapp/data/repository/movie_repository.dart';
 import 'package:movieapp/widgets/app_bar_container.dart';
 import 'package:movieapp/widgets/movie_list_view.dart';
+import 'package:movieapp/widgets/review_widget.dart';
+import 'package:movieapp/widgets/similar_movie_widget.dart';
 
 class MovieDetail extends StatelessWidget {
   Movie? movie;
@@ -23,26 +25,26 @@ class MovieDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
-    return Scaffold(
-        appBar: AppBar(
-          flexibleSpace: const AppBarGradient(),
-          title: Text(movie!.title!.toUpperCase()),
-        ),
-        body: BlocProvider(
-            create: (BuildContext context)=>MovieBloc(
-                RepositoryProvider.of<MovieReposiotry>(context)
-            )..add(GetSimilarMovies(id: movie!.id.toString())),
-          child: SingleChildScrollView(
-            child: Container(
-                height: height,
-                width: width,
-                decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [Colors.red, Colors.black, Colors.black]),
-                ),
-                child: Column(
+    return Container(
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [Colors.red, Colors.black, Colors.black]),
+      ),
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+          appBar: AppBar(
+            flexibleSpace: const AppBarGradient(),
+            title: Text(movie!.title!.toUpperCase()),
+          ),
+          body: BlocProvider(
+            create: (BuildContext context) =>
+                MovieBloc(RepositoryProvider.of<MovieReposiotry>(context))
+                  ..add(GetSimilarMovies(id: movie!.id.toString())),
+            child: ListView(
+              children:[
+                Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -54,14 +56,16 @@ class MovieDetail extends StatelessWidget {
                             width: width! * 0.4,
                             height: height! * 0.3,
                             decoration: BoxDecoration(
-                                borderRadius: BorderRadius.all(Radius.circular(20)),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(20)),
                                 image: DecorationImage(
-                                    image: NetworkImage( "https://image.tmdb.org/t/p/w500/"+movie!.poster_path!),
+                                    image: NetworkImage(
+                                        "https://image.tmdb.org/t/p/w500/" +
+                                            movie!.poster_path!),
                                     fit: BoxFit.cover)),
                           ),
                         ),
-                        Expanded(
-                            child: Column(
+                        Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -77,7 +81,7 @@ class MovieDetail extends StatelessWidget {
                             ),
                             Text(
                               movie!.vote_count!.toString() + " Votes",
-                              style:const TextStyle(
+                              style: const TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 15),
@@ -91,13 +95,13 @@ class MovieDetail extends StatelessWidget {
                             ),
                             Text(
                               movie!.adult! + " Adult",
-                              style:const TextStyle(
+                              style: const TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 15),
                             ),
                           ],
-                        )),
+                        ),
                       ],
                     ),
                     Row(
@@ -110,7 +114,7 @@ class MovieDetail extends StatelessWidget {
                             child: Container(
                               width: width! * 0.2,
                               child: Row(
-                                children: const[
+                                children: const [
                                   Icon(Icons.forward),
                                   Text('Play'),
                                 ],
@@ -153,70 +157,55 @@ class MovieDetail extends StatelessWidget {
                       ],
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(10.0),
                       child: Text(
                         movie!.overview!,
                         style: const TextStyle(color: Colors.white),
                       ),
                     ),
-
-                   BlocConsumer<MovieBloc , MovieState>(
-
-                       builder: (context , state){
-
-                         if(state is LoadingMovie)
-                         {
-                           return Center(
-                               child: CircularProgressIndicator(),
-                             );
-                         }
-                         if(state is LoadedMovie)
-                         {
-
-                           return MovieListView(title: "More Like This",movies:state.Similarmovies!);
-                         }
-
-                         if(state is FailureMovie)
-                         {
-                           return Center(
-                             child: Text(state.error.toString()),
-                           );
-                         }
-
-
-                         return Container();
-                       },
-
-                     listener: (context , state){
-
-                       if(state is LoadingMovie)
-                       {
-                         ScaffoldMessenger.of(context).showSnackBar(
-                             SnackBar(content: Text("LOADING YOUR MOVIES") , backgroundColor: Colors.red,)
-                         );
-                       }
-                       if(state is LoadedMovie)
-                       {
-                         ScaffoldMessenger.of(context).showSnackBar(
-                             SnackBar(content: Text("Loaded Your Movies") , backgroundColor: Colors.grey,)
-                         );
-                       }
-
-                     },
-
-
-                   )
-
-
-
-                   // MovieListView(title: "More Like These - Movies",movies: m,),
-
-
-
-
                   ],
-                )),
-          ),
-        ));
+                ),
+                BlocConsumer<MovieBloc, MovieState>(
+                  builder: (context, state) {
+                    if (state is LoadingMovie) {
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                    if (state is LoadedMovie) {
+                      return SimilarMovieWidget(
+                          title: "More Like This",
+                          movies: state.Similarmovies!);
+                    }
+
+                    if (state is FailureMovie) {
+                      return Center(
+                        child: Text(state.error.toString()),
+                      );
+                    }
+
+                    return Container();
+                  },
+                  listener: (context, state) {
+                  },
+                ),
+
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                   height: height!*0.30,
+                    child: ListView.builder(
+                      itemCount: 4,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context , index){
+                          return ReviewWidget();
+                        })
+                  ),
+                ),
+
+            ]
+            ),
+          )),
+    );
   }
 }
