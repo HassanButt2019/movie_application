@@ -9,10 +9,17 @@ import 'package:movieapp/bloc/states/movie_loaded.dart';
 import 'package:movieapp/bloc/states/movie_loaded_grid.dart';
 import 'package:movieapp/bloc/states/movie_loading.dart';
 import 'package:movieapp/bloc/states/movie_state.dart';
+import 'package:movieapp/data/models/movie.dart';
 import 'package:movieapp/data/repository/movie_repository.dart';
 
 class MovieBloc extends Bloc<MovieEvent, MovieState> {
   MovieReposiotry reposiotry = MovieReposiotry();
+  List<Movie>?  upCommingmovies ;
+  List<Movie>? topRatedmovies;
+
+  List<Movie>? Popularmovies;
+  List<Movie>? Similarmovies;
+
 
   MovieBloc(this.reposiotry) : super(InitialMovie());
 
@@ -21,10 +28,11 @@ class MovieBloc extends Bloc<MovieEvent, MovieState> {
     if (event is RequestMovie) {
       yield LoadingMovie();
       try {
-        final upCommingmovies = await reposiotry.getUpCommingMovies();
-        final topRatedmovies = await reposiotry.getTopRatedMovies();
-        final Popularmovies = await reposiotry.getPopularMovies();
+          upCommingmovies = await reposiotry.getUpCommingMovies();
 
+          topRatedmovies = await reposiotry.getTopRatedMovies();
+
+          Popularmovies = await reposiotry.getPopularMovies();
 
         yield LoadedMovie(Upcomingmovies:upCommingmovies , TopRatedmovies: topRatedmovies  , Popularmovies: Popularmovies  );
       } catch (e) {
@@ -42,26 +50,31 @@ class MovieBloc extends Bloc<MovieEvent, MovieState> {
 
         }catch(e){
          yield FailureMovie(error: e.toString());
-
         }
       }
-
 
     if (event is ChangeLayout) {
       yield LoadingMovie();
       try {
-        final upCommingmovies = await reposiotry.getUpCommingMovies();
-        final topRatedmovies = await reposiotry.getTopRatedMovies();
-        final Popularmovies = await reposiotry.getPopularMovies();
-
+        if(upCommingmovies!.isEmpty)
+        {
+          upCommingmovies = await reposiotry.getUpCommingMovies();
+        }
+        if(topRatedmovies!.isEmpty)
+        {
+          topRatedmovies = await reposiotry.getTopRatedMovies();
+        }
+        if(Popularmovies!.isEmpty)
+        {
+          Popularmovies = await reposiotry.getPopularMovies();
+        }
         yield MovieLoadedGrid( Upcomingmovies:upCommingmovies , TopRatedmovies: topRatedmovies  , Popularmovies: Popularmovies  );
       } catch (e) {
         yield FailureMovie(error: e.toString());
-
       }
     }
-
   }
-
-
 }
+
+//1)socket exception
+//2)should call one time

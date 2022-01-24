@@ -12,6 +12,7 @@ import 'package:movieapp/bloc/states/movie_state.dart';
 import 'package:movieapp/data/models/movie.dart';
 import 'package:movieapp/data/repository/movie_repository.dart';
 import 'package:movieapp/screens/movie_detail.dart';
+import 'package:movieapp/utils/internet_exception.dart';
 import 'package:movieapp/widgets/app_bar_container.dart';
 import 'package:movieapp/widgets/carousal_widget.dart';
 import 'package:movieapp/widgets/movie_component_grid.dart';
@@ -29,14 +30,26 @@ class MovieList extends StatefulWidget {
 class _MovieListState extends State<MovieList> {
 
   bool toggle = false;
+  InternetException internetException = InternetException();
+
 
   Movie movie =  Movie();
   double? width , height;
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    internetException.hasNet().then((value) {
+      setState(() {
+
+      });
+    });
+  }
+  @override
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
     height=MediaQuery.of(context).size.height;
-    return BlocProvider(
+    return  internetException.connection == false?internetException.NoInternetWidget():BlocProvider(
         create: (BuildContext context)=>MovieBloc(
             RepositoryProvider.of<MovieReposiotry>(context)
         )..add(RequestMovie()),
