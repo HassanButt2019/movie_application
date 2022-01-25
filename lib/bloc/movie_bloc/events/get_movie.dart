@@ -1,7 +1,8 @@
 
 
 
-import 'package:movieapp/bloc/events/movie_event.dart';
+
+import 'package:movieapp/bloc/movie_bloc/events/movie_event.dart';
 
 class RequestMovie extends MovieEvent
 {

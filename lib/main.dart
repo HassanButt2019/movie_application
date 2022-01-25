@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movieapp/bloc/events/get_movie.dart';
-import 'package:movieapp/bloc/movie_bloc.dart';
+import 'package:movieapp/bloc/movie_bloc/movie_bloc.dart';
 import 'package:movieapp/data/repository/movie_repository.dart';
 import 'package:movieapp/screens/movie_list.dart';
 

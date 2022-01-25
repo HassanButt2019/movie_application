@@ -1,5 +1,5 @@
 
-import 'package:movieapp/bloc/states/movie_state.dart';
+import 'package:movieapp/bloc/movie_bloc/states/movie_state.dart';
 import 'package:movieapp/data/models/movie.dart';
 
 class LoadedMovie extends MovieState

@@ -38,7 +38,9 @@ class SimilarMovieWidget extends StatelessWidget {
               itemBuilder: (context, index) {
                 return Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: CircularListView(movie: movies[index],)
+                  child: CircularListView(movie: movies[index],  onTap:  (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>MovieDetail(movie:  movies[index],)));
+                  })
                 );
               }),
         ),

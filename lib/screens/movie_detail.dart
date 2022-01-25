@@ -1,15 +1,22 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movieapp/bloc/events/get_movie.dart';
-import 'package:movieapp/bloc/events/get_similar_movies.dart';
-import 'package:movieapp/bloc/movie_bloc.dart';
-import 'package:movieapp/bloc/states/movie_failure.dart';
-import 'package:movieapp/bloc/states/movie_loaded.dart';
-import 'package:movieapp/bloc/states/movie_loading.dart';
-import 'package:movieapp/bloc/states/movie_state.dart';
+import 'package:movieapp/bloc/movie_bloc/events/get_similar_movies.dart';
+import 'package:movieapp/bloc/movie_bloc/movie_bloc.dart';
+import 'package:movieapp/bloc/movie_bloc/states/movie_failure.dart';
+import 'package:movieapp/bloc/movie_bloc/states/movie_loaded.dart';
+import 'package:movieapp/bloc/movie_bloc/states/movie_loading.dart';
+import 'package:movieapp/bloc/movie_bloc/states/movie_state.dart';
+import 'package:movieapp/bloc/reviews_bloc/events/get_reviews.dart';
+import 'package:movieapp/bloc/reviews_bloc/reviews_bloc.dart';
+import 'package:movieapp/bloc/reviews_bloc/states/review_failure.dart';
+import 'package:movieapp/bloc/reviews_bloc/states/review_loaded.dart';
+import 'package:movieapp/bloc/reviews_bloc/states/review_loading.dart';
+import 'package:movieapp/bloc/reviews_bloc/states/review_state.dart';
+
 import 'package:movieapp/data/models/movie.dart';
 import 'package:movieapp/data/repository/movie_repository.dart';
+import 'package:movieapp/data/repository/reviews_repository.dart';
 import 'package:movieapp/widgets/app_bar_container.dart';
 import 'package:movieapp/widgets/movie_list_view.dart';
 import 'package:movieapp/widgets/review_widget.dart';
@@ -74,7 +81,7 @@ class MovieDetail extends StatelessWidget {
                               style: const TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 20),
+                                  fontSize: 16),
                             ),
                             SizedBox(
                               height: height! * 0.05,
@@ -190,18 +197,62 @@ class MovieDetail extends StatelessWidget {
                   },
                 ),
 
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                   height: height!*0.30,
-                    child: ListView.builder(
-                      itemCount: 4,
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (context , index){
-                          return ReviewWidget();
-                        })
+                RepositoryProvider(
+                    create: (BuildContext context)=>ReviewsReposiotry(),
+                  child: BlocProvider(
+                    create: (BuildContext context) =>
+                    ReviewBloc(RepositoryProvider.of<ReviewsReposiotry>(context))
+                      ..add(RequestReviews(id: movie!.id.toString())),
+                    child:BlocConsumer<ReviewBloc, ReviewState>(
+                      builder: (context, state) {
+                        if (state is LoadingReviews) {
+                          return Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                        print(state);
+                        if (state is LoadedReview) {
+                          return   Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+
+                              children: [
+                             const   Padding(
+                                  padding: EdgeInsets.only(left: 20.0, top: 10,bottom: 10),
+                                  child: Text(
+                                   "Reviews",
+                                    style: TextStyle(
+                                        color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
+                                  ),
+                                ),
+                                Container(
+                                    height: height!*0.30,
+                                    child: ListView.builder(
+                                        itemCount: state.reviews.length,
+                                        scrollDirection: Axis.horizontal,
+                                        itemBuilder: (context , index){
+                                          return state.reviews.length==0?Container() :ReviewWidget(reviews : state.reviews[index]);
+                                        })
+                                ),
+                              ],
+                            ),
+                          );
+                        }
+
+                        if (state is FailureReview) {
+                          return Center(
+                            child: Text(state.error.toString()),
+                          );
+                        }
+
+                        return Container();
+                      },
+                      listener: (context, state) {
+                      },
+                    ),
                   ),
-                ),
+
+      ),
 
             ]
             ),

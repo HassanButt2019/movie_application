@@ -1,14 +1,14 @@
 import 'package:bloc/bloc.dart';
-import 'package:movieapp/bloc/events/change_layout.dart';
-import 'package:movieapp/bloc/events/get_movie.dart';
-import 'package:movieapp/bloc/events/get_similar_movies.dart';
-import 'package:movieapp/bloc/events/movie_event.dart';
-import 'package:movieapp/bloc/states/movie_failure.dart';
-import 'package:movieapp/bloc/states/movie_initial.dart';
-import 'package:movieapp/bloc/states/movie_loaded.dart';
-import 'package:movieapp/bloc/states/movie_loaded_grid.dart';
-import 'package:movieapp/bloc/states/movie_loading.dart';
-import 'package:movieapp/bloc/states/movie_state.dart';
+import 'package:movieapp/bloc/movie_bloc/events/change_layout.dart';
+import 'package:movieapp/bloc/movie_bloc/events/get_movie.dart';
+import 'package:movieapp/bloc/movie_bloc/events/get_similar_movies.dart';
+import 'package:movieapp/bloc/movie_bloc/events/movie_event.dart';
+import 'package:movieapp/bloc/movie_bloc/states/movie_failure.dart';
+import 'package:movieapp/bloc/movie_bloc/states/movie_initial.dart';
+import 'package:movieapp/bloc/movie_bloc/states/movie_loaded.dart';
+import 'package:movieapp/bloc/movie_bloc/states/movie_loaded_grid.dart';
+import 'package:movieapp/bloc/movie_bloc/states/movie_loading.dart';
+import 'package:movieapp/bloc/movie_bloc/states/movie_state.dart';
 import 'package:movieapp/data/models/movie.dart';
 import 'package:movieapp/data/repository/movie_repository.dart';
 

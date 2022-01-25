@@ -1,5 +1,6 @@
 
-import 'package:movieapp/bloc/states/movie_state.dart';
+
+import 'package:movieapp/bloc/movie_bloc/states/movie_state.dart';
 
 class FailureMovie extends MovieState
 {

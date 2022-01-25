@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movieapp/bloc/events/change_layout.dart';
-import 'package:movieapp/bloc/events/get_movie.dart';
-import 'package:movieapp/bloc/movie_bloc.dart';
-import 'package:movieapp/bloc/states/movie_failure.dart';
-import 'package:movieapp/bloc/states/movie_initial.dart';
-import 'package:movieapp/bloc/states/movie_loaded.dart';
-import 'package:movieapp/bloc/states/movie_loaded_grid.dart';
-import 'package:movieapp/bloc/states/movie_loading.dart';
-import 'package:movieapp/bloc/states/movie_state.dart';
+import 'package:movieapp/bloc/movie_bloc/events/change_layout.dart';
+import 'package:movieapp/bloc/movie_bloc/events/get_movie.dart';
+import 'package:movieapp/bloc/movie_bloc/movie_bloc.dart';
+import 'package:movieapp/bloc/movie_bloc/states/movie_failure.dart';
+import 'package:movieapp/bloc/movie_bloc/states/movie_initial.dart';
+import 'package:movieapp/bloc/movie_bloc/states/movie_loaded.dart';
+import 'package:movieapp/bloc/movie_bloc/states/movie_loaded_grid.dart';
+import 'package:movieapp/bloc/movie_bloc/states/movie_loading.dart';
+import 'package:movieapp/bloc/movie_bloc/states/movie_state.dart';
+
 import 'package:movieapp/data/models/movie.dart';
 import 'package:movieapp/data/repository/movie_repository.dart';
 import 'package:movieapp/screens/movie_detail.dart';
