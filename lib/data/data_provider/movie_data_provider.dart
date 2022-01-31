@@ -9,8 +9,6 @@ class MovieDataProvider
   final _popular = "https://api.themoviedb.org/3/movie/popular?api_key=c1e80fe769fd1c74e339f5e7349d0a56&language=en-US&page=1";
   final _latest = "https://api.themoviedb.org/3/movie/latest?api_key=c1e80fe769fd1c74e339f5e7349d0a56&language=en-US";
 
-
-
   Future<http.Response> getUpcomingMovies()async
   {
 
