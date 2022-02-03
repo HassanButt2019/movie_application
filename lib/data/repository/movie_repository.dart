@@ -13,21 +13,20 @@ import 'package:movieapp/data/models/movie.dart';
 class MovieReposiotry
 {
   final MovieDataProvider _provider = MovieDataProvider();
-
-  Future<List<Movie>>  getUpCommingMovies() async
+  Future<List<Movie>>  getUpCommingMovies(int pageNumber) async
   {
     print("HELLO Upcomming");
-    http.Response rawData = await _provider.getUpcomingMovies();
+    http.Response rawData = await _provider.getUpcomingMovies(pageNumber);
     final json = jsonDecode(rawData.body) ;
     List<Movie> data = json["results"].map<Movie>((model) => Movie.fromJson(model)).toList();
     return data;
   }
 
 
-  Future<List<Movie>>  getTopRatedMovies() async
+  Future<List<Movie>>  getTopRatedMovies(int pageNumber) async
   {
     print("HELLO TopRated");
-    http.Response rawData = await _provider.getTopRatedMovies();
+    http.Response rawData = await _provider.getTopRatedMovies(pageNumber);
     final json = jsonDecode(rawData.body) ;
     List<Movie> data = json["results"].map<Movie>((model) => Movie.fromJson(model)).toList();
     return data;
@@ -35,10 +34,10 @@ class MovieReposiotry
 
 
 
-  Future<List<Movie>>  getPopularMovies() async
+  Future<List<Movie>>  getPopularMovies(int pageNumber) async
   {
     print("HELLO Popular");
-    http.Response rawData = await _provider.getPopularMovies();
+    http.Response rawData = await _provider.getPopularMovies(pageNumber);
     final json = jsonDecode(rawData.body) ;
     List<Movie> data = json["results"].map<Movie>((model) => Movie.fromJson(model)).toList();
     return data;

@@ -12,7 +12,7 @@ class AppBarGradient extends StatelessWidget {
         gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: <Color>[Colors.red,Colors.black]),
+            colors: <Color>[Colors.black,Colors.black]),
       ),
     );
   }

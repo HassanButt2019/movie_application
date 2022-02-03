@@ -17,7 +17,7 @@ Author _$AuthorFromJson(Map<String, dynamic> json) => Author(
 Map<String, dynamic> _$AuthorToJson(Author instance) => <String, dynamic>{
       'author': instance.author,
       'content': instance.content,
-      'id': instance.id.toString(),
+      'id': instance.id,
       'updated_at': instance.updated_at,
       'author_details': instance.author_details,
     };

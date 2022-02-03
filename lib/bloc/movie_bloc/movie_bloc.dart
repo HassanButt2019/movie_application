@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:movieapp/bloc/movie_bloc/events/change_layout.dart';
 import 'package:movieapp/bloc/movie_bloc/events/get_movie.dart';
 import 'package:movieapp/bloc/movie_bloc/events/get_similar_movies.dart';
 import 'package:movieapp/bloc/movie_bloc/events/movie_event.dart';
+import 'package:movieapp/bloc/movie_bloc/events/request_specific_type.dart';
 import 'package:movieapp/bloc/movie_bloc/states/movie_failure.dart';
 import 'package:movieapp/bloc/movie_bloc/states/movie_initial.dart';
 import 'package:movieapp/bloc/movie_bloc/states/movie_loaded.dart';
@@ -14,30 +17,90 @@ import 'package:movieapp/data/repository/movie_repository.dart';
 
 class MovieBloc extends Bloc<MovieEvent, MovieState> {
   MovieReposiotry reposiotry = MovieReposiotry();
-  List<Movie>?  upCommingmovies ;
-  List<Movie>? topRatedmovies;
+  List<Movie>  upCommingmovies = [];
+  List<Movie> topRatedmovies = [];
+  List<Movie> Popularmovies = [];
+  List<Movie> Similarmovies =[] ;
+  int UpCommingpageNumber = 1;
+  int TopRatedpageNumber = 1;
+  int PopularpageNumber = 1;
 
-  List<Movie>? Popularmovies;
-  List<Movie>? Similarmovies;
+
+  final _upComingController = StreamController<List<Movie>>.broadcast();
+  Stream<List<Movie>> get upComingMoviesStream => _upComingController.stream;
+
+  final _topRatedController = StreamController<List<Movie>>.broadcast();
+  Stream<List<Movie>> get topRatedMoviesStream => _topRatedController.stream;
+  final _popularController = StreamController<List<Movie>>.broadcast();
+  Stream<List<Movie>> get popularMoviesStream => _popularController.stream;
+
+
+
+
+  bool isUpdate = false;
 
 
   MovieBloc(this.reposiotry) : super(InitialMovie());
+
+
+
+  @override
+  void dispose(){
+    _upComingController.close();
+    _popularController.close();
+    _topRatedController.close();
+  }
+
+
+  void getUpComngMoves()async
+  {
+    UpCommingpageNumber++;
+    isUpdate = true;
+    upCommingmovies.addAll(await reposiotry.getUpCommingMovies(UpCommingpageNumber));
+    _upComingController.sink.add(upCommingmovies);
+    isUpdate = false;
+  }
+
+  void getTopMovies()async
+  {
+    TopRatedpageNumber++;
+    isUpdate = true;
+    topRatedmovies.addAll(await reposiotry.getTopRatedMovies(TopRatedpageNumber));
+    _topRatedController.sink.add(topRatedmovies);
+    isUpdate = false;
+  }
+
+  void getPopularMovies()async
+  {
+    PopularpageNumber;
+    isUpdate = true;
+    Popularmovies.addAll(await reposiotry.getPopularMovies(PopularpageNumber));
+    _popularController.sink.add(Popularmovies);
+    isUpdate = false;
+  }
+
 
   @override
   Stream<MovieState> mapEventToState(MovieEvent event) async* {
     if (event is RequestMovie) {
       yield LoadingMovie();
       try {
-          upCommingmovies = await reposiotry.getUpCommingMovies();
+          upCommingmovies.addAll(await reposiotry.getUpCommingMovies(UpCommingpageNumber));
+          _upComingController.sink.add(upCommingmovies);
 
-          topRatedmovies = await reposiotry.getTopRatedMovies();
 
-          Popularmovies = await reposiotry.getPopularMovies();
+          topRatedmovies.addAll(await reposiotry.getTopRatedMovies(TopRatedpageNumber));
+          _topRatedController.sink.add(topRatedmovies);
 
-        yield LoadedMovie(Upcomingmovies:upCommingmovies , TopRatedmovies: topRatedmovies  , Popularmovies: Popularmovies  );
+
+          Popularmovies.addAll(await reposiotry.getPopularMovies(PopularpageNumber));
+          _popularController.sink.add(Popularmovies);
+
+
+          yield LoadedMovie(Upcomingmovies:upCommingmovies , TopRatedmovies: topRatedmovies  , Popularmovies: Popularmovies  );
+
       } catch (e) {
        yield FailureMovie(error: e.toString());
-
       }
     }
 
@@ -47,7 +110,6 @@ class MovieBloc extends Bloc<MovieEvent, MovieState> {
         try{
           final Similarmovies = await reposiotry.getSimilarMovies(event.id);
           yield LoadedMovie( Similarmovies: Similarmovies);
-
         }catch(e){
          yield FailureMovie(error: e.toString());
         }
@@ -56,17 +118,18 @@ class MovieBloc extends Bloc<MovieEvent, MovieState> {
     if (event is ChangeLayout) {
       yield LoadingMovie();
       try {
-        if(upCommingmovies!.isEmpty)
+        if(upCommingmovies.isEmpty)
         {
-          upCommingmovies = await reposiotry.getUpCommingMovies();
+         upCommingmovies = await reposiotry.getUpCommingMovies(UpCommingpageNumber);
+         _upComingController.sink.add(upCommingmovies);
         }
-        if(topRatedmovies!.isEmpty)
+        if(topRatedmovies.isEmpty)
         {
-          topRatedmovies = await reposiotry.getTopRatedMovies();
+          topRatedmovies = await reposiotry.getTopRatedMovies(TopRatedpageNumber);
         }
-        if(Popularmovies!.isEmpty)
+        if(Popularmovies.isEmpty)
         {
-          Popularmovies = await reposiotry.getPopularMovies();
+          Popularmovies = await reposiotry.getPopularMovies(PopularpageNumber);
         }
         yield MovieLoadedGrid( Upcomingmovies:upCommingmovies , TopRatedmovies: topRatedmovies  , Popularmovies: Popularmovies  );
       } catch (e) {
@@ -76,5 +139,5 @@ class MovieBloc extends Bloc<MovieEvent, MovieState> {
   }
 }
 
-//1)socket exception
-//2)should call one time
+//1)
+//2)

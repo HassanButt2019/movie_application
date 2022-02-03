@@ -4,6 +4,7 @@
 
 
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:movieapp/data/models/movie.dart';
 
@@ -22,25 +23,30 @@ class CircularListView extends StatelessWidget {
       onTap:onTap,
       child: Column(
           children:[
-            Container(
-              height: height!*0.12,
-              width: width!*0.2,
-
-              decoration: BoxDecoration(
-                color: Colors.white,
-                  borderRadius: BorderRadius.all(Radius.circular(150)),
-                  image: DecorationImage(
-                      image: NetworkImage(
-                          "https://image.tmdb.org/t/p/w500/"+movie!.poster_path!                        ),
-                      fit: BoxFit.cover
-                  )
-              ),
-            ),
+            _imageWidget(),
             SizedBox(
               height: 10,
             ),
-            Center(child: Text(movie!.title!.length > 20 ? movie!.title!.substring(0,20):movie!.title! ,style: TextStyle(fontSize: 14,color: Colors.white,fontWeight: FontWeight.normal),)),
+            _titleWidget(),
           ]),
     );
+  }
+
+  Center _titleWidget() => Center(child: Text(movie!.title! , textAlign: TextAlign.center , maxLines: 4 ,style: TextStyle(fontSize: 14,color: Colors.white,fontWeight: FontWeight.normal),));
+
+  Container _imageWidget() {
+    return Container(
+            height: height!*0.12,
+            width: width!*0.2,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(30),
+              child: CachedNetworkImage(
+                imageUrl: "https://image.tmdb.org/t/p/w500/"+movie!.poster_path! ,
+                progressIndicatorBuilder: (context, url, downloadProgress) =>
+                    CircularProgressIndicator(value: downloadProgress.progress),
+                errorWidget: (context, url, error) => Icon(Icons.error),
+              ),
+            ),
+          );
   }
 }

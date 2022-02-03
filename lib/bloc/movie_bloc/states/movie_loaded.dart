@@ -10,9 +10,6 @@ class LoadedMovie extends MovieState
 
   List<Movie>? Popularmovies;
   List<Movie>? Similarmovies;
-
-
-
   LoadedMovie({this.TopRatedmovies ,this.Upcomingmovies , this.Popularmovies , this.Similarmovies });
   @override
   // TODO: implement props
